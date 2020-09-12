@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Sentiment Analysis Web App</title>
+        <meta charset="utf-8">
+        <meta name="viewport"  content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script>
+         "use strict";
+         function submitForm(oFormElement) {
+             var xhr = new XMLHttpRequest();
+             xhr.onload = function() {
+                 var result = parseFloat(xhr.responseText);
+                 var resultElement = document.getElementById('result');
+                 if (result == 0) {
+                     resultElement.className = 'text-danger';
+                     resultElement.innerHTML = 'Your review was NEGATIVE!';
+                 } else {
+                     resultElement.className = 'text-success';
+                     resultElement.innerHTML = 'Your review was POSITIVE!';
+                 }
+             }
+             xhr.open (oFormElement.method, oFormElement.action, true);
+             var review = document.getElementById('review');
+             xhr.send (review.value);
+             return false;
+         }
+
+        </script>
+		<style>
+        body, html {
+            height: 120%;
+            margin: 0;
+            /* The image used */
+            background-image: url("movie_image7.jpg") ;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            }
+        .header {
+            padding: 1px;
+            text-align: left;
+            background: #1abc9c;
+            color: white;
+            font-size: 30px;
+            }
+        </style>
+
+    </head
+	
+    <body>
+        <div class="header">
+            <h1>Sentiment Analysis Web App</h1>
+        </div>
+
+        <div class="container">
+            <h1 style="text-align: center;">Is your review positive, or negative?</h1>
+            <h3 style="text-align: center;">Enter your review below and click submit to find out...</h3>
+            <form method="POST"
+                  action="https://n1avl10ck5.execute-api.us-east-2.amazonaws.com/prod"
+                  onsubmit="return submitForm(this);" >                     <!-- HERE IS WHERE YOU NEED TO ENTER THE API URL -->
+                <div class="form-group">
+                    <label for="review">Review:</label>
+                    <textarea class="form-control" required rows="5" id="review" placeholder = "Please write your review here." autofocus></textarea>
+                </div>
+                <button style="margin-right: 20px" type="submit" class="btn btn-success">Submit</button>
+                <button onclick = "location.reload();" style="margin-right: 20px" type="reset" class="btn btn-info">Reset</button>
+            </form>
+            <h1 class="bg-success" id="result"></h1>
+        </div>
+    </body>
+</html>
